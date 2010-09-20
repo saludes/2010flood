@@ -1,0 +1,41 @@
+function [q]=fluxFunction(t)
+%definition of a function that describes the hydrograph
+% %% Gaussian profile
+qp=1;
+tp=5;
+tb=1;
+tVector=linspace(0,10,101);
+qVector=qp*exp(-(tVector-tp).^2/(2*tb^2));
+q=qp*exp(-(t-tp).^2/(2*tb^2));
+if (strcmp(t,'time'))
+    q=tVector;
+else
+    if (strcmp(t,'flux'))
+        q=qVector;
+    else
+        q=interp1(tVector,qVector,t);
+    end
+end
+
+%% function 2
+f2=exp(-(t-3).^2/(1))+exp(-(t-7).^2/(1));
+
+%% function 3
+ f3=exp(-(t-3).^2/(0.1))+0.5*exp(-(t-7).^2/(4));
+% %% Gaussian profile
+% qp=1;
+% tp=5;
+% tb=1;
+% tVector=linspace(0,10,100);
+% qVector=qp*exp(-(tVector-tp).^2/(2*tb^2));
+
+
+%q=qp*exp(-(t-tp).^2/(2*tb^2));
+
+
+
+%%
+% load gemtdata1t
+%qVector=XX;
+%tVector=XX;
+% q=interp1(tVector,qVector,t);
