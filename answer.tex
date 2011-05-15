@@ -1,0 +1,126 @@
+%% LyX 2.0.0 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+%\documentclass[english]{article}
+%\usepackage[T1]{fontenc}
+%\usepackage[latin9]{inputenc}
+%\usepackage{babel}
+
+\section{Introduction}
+
+The initial data is the forecasted avenue hydrogram (the graph of
+the flow as a function of time) computed from observations at a point
+upstream of the control point. Two parameters are relevant: the \emph{maximal
+flow} and the \emph{total volume} of the avenue.
+
+We assume that the water height at the control point is a increasing
+function of the flow $Q$ at that point.
+
+Let us considere three states related to the flow $Q$:\global\long\def\Qmin{Q_{\mbox{min}}}
+\global\long\def\Qf{Q_{\mbox{f}}}
+\global\long\def\Qmao{Q_{\mbox{mao}}}
+\global\long\def\Qmax{Q_{\mbox{max}}}
+\global\long\def\Qi{Q_{\mbox{i}}}
+
+\begin{itemize}
+\item The \emph{steady state} corresponds to $Q<\Qmin$, where $\Qmin$
+is the flow that brings the water at the control point high enough
+for the gates to open. 
+\item A\emph{ typical avenue} state corresponds to $\Qmin<Q<\Qmao$. The
+flow $\Qmao$ is the maximum flow for a recurrent avenue, one that
+happens every two or three years. 
+\item The \emph{high avenue} state happens when $\Qmao<Q<\Qmax$, where
+$\Qmax$ is the flow that makes the water level spill over the floodable
+areas. 
+\item Finally, when $Q>\Qmax$ 
+\end{itemize}
+For this the following control strategies are defined: 
+\begin{itemize}
+\item If the maximum forecast flow $\Qi$ is less than $\Qmao$, the gates
+are not opened. 
+\item When $\Qi>\Qmao$ and $\Qf<\Qmax$. In this case the goal is to minimize
+the ??. To compute this, one cuts from the hydrogram an area equivalent
+to the capacity of the floodable areas, to get a maxim plateau of
+$\Qf$ flow. 
+\end{itemize}
+
+\section{Cutting the avenue}
+
+We want to ensure $\Qf<\Qmax$ whenever possible, where $\Qmax$ is
+the \emph{peak flow} that results of gates opening. 
+\begin{itemize}
+\item $Q(t)=\tilde{Q}(t)$ except for $t\in[t_{0},t_{1}]$ (the controlling
+period) 
+\item If $Q(t)<Q_{\mbox{min}}$, then $Q(t)=\tilde{Q}(t)$ (No gate opening
+below this level) 
+\item $\tilde{Q}(t)\leq Q(t)$, for all $t$; 
+\item Denote by $V$ the total capacity of the floodable areas, Then
+\begin{equation}
+\int(Q(t)-\tilde{Q}(t))\, dt\leq V.\label{eq:capacity}
+\end{equation}
+
+\item If possible $Q_{\mbox{f}}=\sup\tilde{Q}<Q_{\mbox{max}}$ 
+\end{itemize}
+Define $R=Q-\tilde{Q}$. The previous conditions imply that $R$ is
+positive, has compact support and $\int R\, dt\leq V$. Condition
+?? implies that $R=0$.
+
+An obvious choice for $\tilde{Q}$ is to pick $I=[a,b]$ such that
+$\tilde{Q}(t)=Q(t)-Q_{\mbox{set}}$ for $t\in I$ and $Q(t)=\tilde{Q}(t)$
+elsewhere. The capacity condition \eqref{eq:capacity} reads as 
+\[
+\int_{a}^{b}Q\, dt\leq V+Q_{\mbox{set}}(b-a)
+\]
+ and $\Qmax=Q_{\mbox{set}}$ in this case.
+
+Let us call \emph{action support} the interval $I=[a,b]$ where $Q$
+and $\tilde{Q}$ differ. To cut the most of the water we impose equality
+on condition \eqref{eq:capacity} giving
+\[
+\int_{a}^{b}Q\, dt=\int_{a}^{b}\tilde{Q}\, dt+V
+\]
+it is also clear that to minimize $\max\tilde{Q}$ this function must
+be constant $\tilde{Q}(t)=q$, for otherwise we could replace it for
+a constant equal to its mean value on $I$. Therefore \eqref{eq:capacity}
+reads:
+\begin{equation}
+\int_{a}^{b}Q\, dt=q(b-a)+V,\label{eq:prob1}
+\end{equation}
+and the problem is to find $a$, $b$ and fulfiling \eqref{eq:prob1}
+and minimizing $\Qmax$. Add $Q(a)=Q(b)=q$ to \eqref{eq:prob1} and
+we are set.
+
+
+\subsection{The case of monotonic hydrograms}
+
+When $Q$ has a single maximum at the time instant $a\leq t_{m}\leq b$
+is it possible. Consider 
+\[
+W(t)=\int_{-\infty}^{t}Q\, d\tau.
+\]
+Notice that $W(t)$ is increasing and $Q(t)$ is increasing on the
+subinterval $[a,t_{m}]$ and decreasing on $[t_{m},b]$ so we can
+now take $W_{+}(q)=W(t_{+}^{-1}(q))$ defined on $[Q(a),\Qmax]$ and
+$W_{-}(q)=W(t_{-}^{-1}(q))$ in the interval $[Q(b),\Qmax]$. Now
+\[
+f(q)=W_{-}(q)-W_{+}(q)=\int_{t_{+}}^{t_{-}}Q\, d\tau=V
+\]
+
+
+and $f(q)$ is a decreasing function whose range goes to zero. By
+binary bisection it is very easy to find the point $q_{*}$ such that
+$f(q_{*})=V$.
+
+
+\section{Incorporating cost}
+
+Let us now modify the assumption that the impact of flooding the urban
+areas is constant by making it depend on the number of residents affected
+by the flooding. Assume we have geographic data to describe $C(h)$,
+the number of residents that live below heigh $h$. Let $C_{\mbox{f}}$
+be the cost of flooding the fields, then the total cost will be 
+\[
+C=\left\{ \begin{array}{cc}
+C(h) & \mbox{no flooding}\\
+C_{\mbox{f}}+C(h(q_{*})) & \mbox{when flooding}
+\end{array}\right.
+\]
