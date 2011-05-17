@@ -1,11 +1,9 @@
-\def\Qsub#1{q_{\mbox{\scriptsize #1}}}
+\def\Qsub#1{q_{\mbox{\rm\scriptsize #1}}}
 \def\qf{\Qsub{f}}
 \def\qmao{\Qsub{mao}}
 \def\qmax{\Qsub{max}}
 \def\qi{\Qsub{i}}
 \def\qmin{\Qsub{min}}
-
-
 
 \section{Introduction}
 
@@ -47,8 +45,8 @@ maximum after the cutting) and we have $\qf<\qmax$. In this case
 the areas will we drained into the river once the level becomes less
 than $\qmin$ again.
 \item Similar to the previous stage, but now we forecast that, even using
-the total capacity $W$, we will have $\qf>\qmax$. In this case we
-cannot avoid overflooding the areas, but want to delay this moment as
+the toal capacity $W$, we will have $\qf>\qmax$. In this case we
+can avoid overflooding the areas, but want to delay this moment as
 far as possible.
 \item The hydrogram is not unimodal and $\qi>\qmao$, but $\qf<\qmax$.
 This is similar to the stage~2.
@@ -71,19 +69,20 @@ positive, has support on $I$ and $\int R\, dt\leq V$.
 
 Let $I=(a,b)$ the control period. It is clear that to minimize $\max\tilde{q}$
 this function must be constant $\tilde{q}(t)=\qf$ on $I$, for otherwise
-we could replace it with a constant equal to its mean value on $I$.
+we could replace it for a constant equal to its mean value on $I$.
 Thus \eqref{eq:capacity} could be written as: \begin{equation}
 \int_{a}^{b}q\, dt\leq\qf(b-a)+W,\label{eq:prob1}\end{equation}
  and the problem is to find $a$, $b$ and fulfiling \eqref{eq:prob1}
-with $\qf<\qmax$. Add the condition $q(a)=q(b)=q$ to \eqref{eq:prob1} and we
+with $\qf<\qmax$. Add $Q(a)=Q(b)=q$ to \eqref{eq:prob1} and we
 are set. To cut the most of the water we may impose equality on condition
 \eqref{eq:prob1}. 
 
 
 \subsection{The case of monotonic hydrograms}
 
-Consider now the case where $q(t)$ has a single maximum $\qi$ at the time instant $t_{0}\leq t_{m}\leq t_{1}$
-and define for all $0<y\leq\qi$ \[
+When $q(t)$ has a single maximum at the time instant $t_{0}\leq t_{m}\leq t_{1}$
+is it possible. Pick a reference instant $t_{0}$ before the start
+of the flood and define for all $0<y\leq\qi$ \[
 V(y)=\int_{t_{0}}^{t_{1}}\left[q(t)-y\right]_{+}\, dt\leq W,\]
 where $\left[x\right]_{+}=\max\{x,0\}$. This expression could be
 written on the interval $(a,b)$ defined by the condition $q(t)\geq\qf$,
@@ -98,14 +97,20 @@ point $\qf$ such that $V(\qf)=W$ by bisection or inverse interpolation.
 
 \subsection{A numerical experiment}
 
-We are now testing the above procedure with a Rayleigh function as a test case
+??Describe the experiment??
 
-
+%
 \begin{figure}
-\includegraphics[scale=0.3]{qt}\hfill\includegraphics[scale=0.3]{vq}
-\caption{\textbf{Left}: $q(t)$ following a Rayleigh function and the cut volume
-$W=350.$ corresponding to $q=\qf$.\textbf{ Right}: $V(q)$ (blue)
-and $\Delta V(q)$ (green) with the computed set point $\qf$. }
+
+
+\begin{centering}
+\includegraphics[scale=0.8]{cut}
+\par\end{centering}
+
+\caption{\textbf{Left}: $V(q)$ for the test function with the cut volume $W=22.0$
+corresponding to $q=\qf$.\textbf{ Right}: The cut volume is the part
+of the graph of the test function above $q=\qf$. }
+
 \end{figure}
 
 
@@ -121,3 +126,4 @@ C=\left\{ \begin{array}{cc}
 C(h) & \mbox{no flooding}\\
 C_{\mbox{f}}+C(h(q_{*})) & \mbox{when flooding}\end{array}\right.\]
 ?? 
+
