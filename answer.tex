@@ -1,34 +1,7 @@
-%% LyX 1.6.8 created this file.  For more info, see http://www.lyx.org/.
-%% Do not edit unless you really know what you are doing.
-\documentclass[12pt,a4paper,english]{article}
-\usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage{amssymb}
-\usepackage{esint}
-
-\makeatletter
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
-\special{papersize=\the\paperwidth,\the\paperheight}
-
-
-\makeatother
-
-\usepackage{babel}
-
-\begin{document}
-%% LyX 2.0.0 created this file.  For more info, see http://www.lyx.org/.
-%% Do not edit unless you really know what you are doing.
-%\documentclass[english]{article}
-%\usepackage[T1]{fontenc}
-%\usepackage[latin9]{inputenc}
-%\usepackage{babel}
 \global\long\def\Qf{q_{\mbox{f}}}
- \global\long\def\Qmao{q_{\mbox{mao}}}
- \global\long\def\Qmax{q_{\mbox{max}}}
- \global\long\def\Qi{q_{\mbox{i}}}
+\global\long\def\Qmao{q_{\mbox{mao}}}
+\global\long\def\Qmax{q_{\mbox{max}}}
+\global\long\def\Qi{q_{i}}
 \global\long\def\Qmin{q_{\mbox{min}}}
 
 
@@ -108,31 +81,19 @@ are set. To cut the most of the water we may impose equality on condition
 
 \subsection{The case of monotonic hydrograms}
 
-When $q(t)$ has a single maximum at the time instant $a\leq t_{m}\leq b$
-is it possible. Pick a reference instant $t_{0}<a$ and define \[
-V(t)=\int_{t_{0}}^{t}q(\tau)\, d\tau.\]
-Taking $f(x)=\Qi-q(x+t_{\mbox{m}})$, \eqref{eq:prob1} can be written
-as\[
-\int_{a}^{b}f(u)\, du\leq(\Qf+\Qi)(b-a)+W\]
-So the equivalent problem for $f$ is: We have a unimodal non-negative
-function $f(x)$ with $f(0)=0$ and constants $k$ and $W$ and wanted
-to see whenever it exists $a<0<b$, such that $f(a)=f(b)=y$ and\[
-\int_{a}^{b}f(x)\, dx\leq(y+k)(b-a)+W.\]
-Using the mean value thorem, this is equivalent to
-
-Notice that $V(t)$ is increasing, while $q(t)$ is increasing on
-the subinterval $[a,t_{m}]$ and decreasing on $[t_{m},b]$ so we
-can now take $t_{+}(q)$ and $t_{-}(q)$ the inverse functions of
-$q(t)$ on these subintervals and define $V_{+}(q)=V(t_{+}^{-1}(q))$
-on $[q(a),\Qi]$ and $V_{-}(q)=V(t_{-}^{-1}(q))$ in the interval
-$[q(b),\Qi]$. Now consider \[
-\Delta V(q)=V_{+}(q)-V_{-}(q)=\int_{t_{-}(q)}^{t_{+}(q)}q(\tau)\, d\tau.\]
-
-
-Our goal is to find $\Qf$ such that $\Delta V(q)=W$. Then, seting
-$a=t_{-}(\Qf$) and $b=t_{+}(q)$$f(q)$ is a decreasing function
-whose range goes to zero. By binary bisection it is very easy to find
-the point $q_{*}$ such that $f(q_{*})=V$.
+When $q(t)$ has a single maximum at the time instant $t_{0}\leq t_{m}\leq t_{1}$
+is it possible. Pick a reference instant $t_{0}$ before the start
+of the flood and define for all $0<y\leq\Qi$ \[
+V(y)=\int_{t_{0}}^{t_{1}}\left[q(t)-y\right]_{+}\, dt\leq W,\]
+where $\left[x\right]_{+}=\max\{x,0\}$. This expression could be
+written on the interval $(a,b)$ defined by the condition $q(t)\geq\Qf$,
+as an iterated integral as\[
+V(y)=\int_{a}^{b}\left(\int_{y}^{q(t)}dq\right)dt=\int_{y}^{\Qi}\left(\int_{t_{-}(q)}^{t_{+}(q)}dt\right)dq=\int_{y}^{\Qi}(t_{+}(q)-t_{-}(q))\, dq,\]
+by inverting the ordering of the integration and where $t_{-}(q)$
+(respectively $t_{+}(q)$) is the unique $t<t_{\mbox{m}}$ (respectively
+$t>t_{\mbox{m}}$) with $q(t)=q$. Since $V'(y)=t_{-}(y)-t_{+}(y)\leq0$,
+$V\geq0$ is decreasing with $V(\Qi)=0$ and it is easy to find the
+point $\Qf$ such that $V(\Qf)=W$ by bisection or inverse interpolation.
 
 
 \subsection{A numerical experiment}
@@ -164,4 +125,3 @@ C=\left\{ \begin{array}{cc}
 C(h) & \mbox{no flooding}\\
 C_{\mbox{f}}+C(h(q_{*})) & \mbox{when flooding}\end{array}\right.\]
 ?? 
-\end{document}
