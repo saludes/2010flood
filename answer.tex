@@ -1,8 +1,9 @@
-\global\long\def\Qf{q_{\mbox{f}}}
-\global\long\def\Qmao{q_{\mbox{mao}}}
-\global\long\def\Qmax{q_{\mbox{max}}}
-\global\long\def\Qi{q_{i}}
-\global\long\def\Qmin{q_{\mbox{min}}}
+\def\Qsub#1{q_{\mbox{\scriptsize #1}}}
+\def\qf{\Qsub{f}}
+\def\qmao{\Qsub{mao}}
+\def\qmax{\Qsub{max}}
+\def\qi{\Qsub{i}}
+\def\qmin{\Qsub{min}}
 
 
 
@@ -24,12 +25,12 @@ We assume that the water height at the control point is a increasing
 function of the discharge $Q$ at that point. Three parameters are
 relevant:
 \begin{itemize}
-\item A threshold $\Qmin$ that corresponds to the level of the gates: For
-$q<\Qmin$ the system is not controllable;
-\item The \emph{typical maximum flooding} discharge $\Qmao>\Qmin$ is the
+\item A threshold $\qmin$ that corresponds to the level of the gates: For
+$q<\qmin$ the system is not controllable;
+\item The \emph{typical maximum flooding} discharge $\qmao>\qmin$ is the
 maximum discharge for a recurrent flood, one that happens every two
 or three years. 
-\item The maximum admisible discharge $\Qmax>\Qmao$, that makes the water
+\item The maximum admisible discharge $\qmax>\qmao$, that makes the water
 to spill over the floodable areas.
 \end{itemize}
 
@@ -38,78 +39,73 @@ to spill over the floodable areas.
 There are four stages and corresponding strategies when a flood is
 imminent:
 \begin{enumerate}
-\item If the maximum forecast discharge $\Qi<\Qmao$, the gates are not
+\item If the maximum forecast discharge $\qi<\qmao$, the gates are not
 opened. 
-\item $\Qi>\Qmao$: In this case we use the flooding areas to cut the upmost
-part of the hydrogram to force a plateau at level $\Qf$ (the computed
-maximum after the cutting) and we have $\Qf<\Qmax$. In this case
+\item $\qi>\qmao$: In this case we use the flooding areas to cut the upmost
+part of the hydrogram to force a plateau at level $\qf$ (the computed
+maximum after the cutting) and we have $\qf<\qmax$. In this case
 the areas will we drained into the river once the level becomes less
-than $\Qmin$ again.
+than $\qmin$ again.
 \item Similar to the previous stage, but now we forecast that, even using
-the toal capacity $W$, we will have $\Qf>\Qmax$. In this case we
-can avoid overflooding the areas, but want to delay this moment as
+the total capacity $W$, we will have $\qf>\qmax$. In this case we
+cannot avoid overflooding the areas, but want to delay this moment as
 far as possible.
-\item The hydrogram is not unimodal and $\Qi>\Qmao$, but $\Qf<\Qmax$.
+\item The hydrogram is not unimodal and $\qi>\qmao$, but $\qf<\qmax$.
 This is similar to the stage~2.
-\item Like stage~4 but now $\Qf>\Qmax$. This is similar to the stage~3.
+\item Like stage~4 but now $\qf>\qmax$. This is similar to the stage~3.
 \end{enumerate}
 The forecast discharge $q(t)$ will be converted to $\tilde{q}(t)$
 by the control actions such that:
 \begin{itemize}
 \item $q(t)=\tilde{q}(t)$ except for $t\in I=[a,b]$ (the controlling period) 
-\item If for all $t$, $q(t)<\Qmin$, then $q(t)=\tilde{q}(t)$ (No gate
+\item If for all $t$, $q(t)<\qmin$, then $q(t)=\tilde{q}(t)$ (No gate
 opening below this level) 
 \item For all $t$: $\tilde{q}(t)\leq q(t)$, for all $t$; 
 \item Denote by $W$ the total capacity of the floodable areas, Then \begin{equation}
 \int(q(t)-\tilde{q}(t))\, dt\leq W.\label{eq:capacity}\end{equation}
 
-\item If possible, ensure that $\Qf=\max\tilde{q}<\Qmax$ 
+\item If possible, ensure that $\qf=\max\tilde{q}<\qmax$ 
 \end{itemize}
 Define $R=Q-\tilde{Q}$. The previous conditions imply that $R$ is
 positive, has support on $I$ and $\int R\, dt\leq V$. 
 
 Let $I=(a,b)$ the control period. It is clear that to minimize $\max\tilde{q}$
-this function must be constant $\tilde{q}(t)=\Qf$ on $I$, for otherwise
-we could replace it for a constant equal to its mean value on $I$.
+this function must be constant $\tilde{q}(t)=\qf$ on $I$, for otherwise
+we could replace it with a constant equal to its mean value on $I$.
 Thus \eqref{eq:capacity} could be written as: \begin{equation}
-\int_{a}^{b}q\, dt\leq\Qf(b-a)+W,\label{eq:prob1}\end{equation}
+\int_{a}^{b}q\, dt\leq\qf(b-a)+W,\label{eq:prob1}\end{equation}
  and the problem is to find $a$, $b$ and fulfiling \eqref{eq:prob1}
-with $\Qf<\Qmax$. Add $Q(a)=Q(b)=q$ to \eqref{eq:prob1} and we
+with $\qf<\qmax$. Add the condition $q(a)=q(b)=q$ to \eqref{eq:prob1} and we
 are set. To cut the most of the water we may impose equality on condition
 \eqref{eq:prob1}. 
 
 
 \subsection{The case of monotonic hydrograms}
 
-When $q(t)$ has a single maximum at the time instant $t_{0}\leq t_{m}\leq t_{1}$
-is it possible. Pick a reference instant $t_{0}$ before the start
-of the flood and define for all $0<y\leq\Qi$ \[
+Consider now the case where $q(t)$ has a single maximum $\qi$ at the time instant $t_{0}\leq t_{m}\leq t_{1}$
+and define for all $0<y\leq\qi$ \[
 V(y)=\int_{t_{0}}^{t_{1}}\left[q(t)-y\right]_{+}\, dt\leq W,\]
 where $\left[x\right]_{+}=\max\{x,0\}$. This expression could be
-written on the interval $(a,b)$ defined by the condition $q(t)\geq\Qf$,
+written on the interval $(a,b)$ defined by the condition $q(t)\geq\qf$,
 as an iterated integral as\[
-V(y)=\int_{a}^{b}\left(\int_{y}^{q(t)}dq\right)dt=\int_{y}^{\Qi}\left(\int_{t_{-}(q)}^{t_{+}(q)}dt\right)dq=\int_{y}^{\Qi}(t_{+}(q)-t_{-}(q))\, dq,\]
+V(y)=\int_{a}^{b}\left(\int_{y}^{q(t)}dq\right)dt=\int_{y}^{\qi}\left(\int_{t_{-}(q)}^{t_{+}(q)}dt\right)dq=\int_{y}^{\qi}(t_{+}(q)-t_{-}(q))\, dq,\]
 by inverting the ordering of the integration and where $t_{-}(q)$
 (respectively $t_{+}(q)$) is the unique $t<t_{\mbox{m}}$ (respectively
 $t>t_{\mbox{m}}$) with $q(t)=q$. Since $V'(y)=t_{-}(y)-t_{+}(y)\leq0$,
-$V\geq0$ is decreasing with $V(\Qi)=0$ and it is easy to find the
-point $\Qf$ such that $V(\Qf)=W$ by bisection or inverse interpolation.
+$V\geq0$ is decreasing with $V(\qi)=0$ and it is easy to find the
+point $\qf$ such that $V(\qf)=W$ by bisection or inverse interpolation.
 
 
 \subsection{A numerical experiment}
 
-??Describe the experiment??
+We are now testing the above procedure with a Rayleigh function as a test case
 
-%
+
 \begin{figure}
-
-
-\includegraphics[scale=0.3]{qt}\hfill{}\includegraphics[scale=0.3]{vq}
-
+\includegraphics[scale=0.3]{qt}\hfill\includegraphics[scale=0.3]{vq}
 \caption{\textbf{Left}: $q(t)$ following a Rayleigh function and the cut volume
-$W=350.$ corresponding to $q=\Qf$.\textbf{ Right}: $V(q)$ (blue)
-and $\Delta V(q)$ (green) with the computed set point $\Qf$. }
-
+$W=350.$ corresponding to $q=\qf$.\textbf{ Right}: $V(q)$ (blue)
+and $\Delta V(q)$ (green) with the computed set point $\qf$. }
 \end{figure}
 
 
