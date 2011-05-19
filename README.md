@@ -10,4 +10,4 @@ Go to file `flood.pdf` and click _View Raw_.
 
 ## To do
 
-Visit the Wiki [[https://github.com/saludes/2010flood/wiki]]
+Visit the Wiki https://github.com/saludes/2010flood/wiki
