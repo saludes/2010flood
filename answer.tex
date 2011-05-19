@@ -1,129 +1,176 @@
-\def\Qsub#1{q_{\mbox{\rm\scriptsize #1}}}
-\def\qf{\Qsub{f}}
-\def\qmao{\Qsub{mao}}
-\def\qmax{\Qsub{max}}
-\def\qi{\Qsub{i}}
-\def\qmin{\Qsub{min}}
 
-\section{Introduction}
+\def\erf{\mathord{\rm erf}}
 
-According to the EU directive \cite{eurlex}
-\begin{quote}
-\textquoteleft{}flood\textquoteright{} means the temporary covering
-by water of land not normally covered by water. This shall include
-floods from rivers, mountain torrents, Mediterranean ephemeral water
-courses, and floods from the sea in coastal areas, and may exclude
-floods from sewerage systems 
-\end{quote}
-The initial data is the forecasted flood hydrogram (the graph of the
-discharge as a function of time) computed from observations at a point
-upstream of the control point. 
+\section{Motivation}
 
-We assume that the water height at the control point is a increasing
-function of the discharge $Q$ at that point. Three parameters are
-relevant:
-\begin{itemize}
-\item A threshold $\qmin$ that corresponds to the level of the gates: For
-$q<\qmin$ the system is not controllable;
-\item The \emph{typical maximum flooding} discharge $\qmao>\qmin$ is the
-maximum discharge for a recurrent flood, one that happens every two
-or three years. 
-\item The maximum admisible discharge $\qmax>\qmao$, that makes the water
-to spill over the floodable areas.
-\end{itemize}
-
-\section{Cutting the flood}
-
-There are four stages and corresponding strategies when a flood is
-imminent:
-\begin{enumerate}
-\item If the maximum forecast discharge $\qi<\qmao$, the gates are not
-opened. 
-\item $\qi>\qmao$: In this case we use the flooding areas to cut the upmost
-part of the hydrogram to force a plateau at level $\qf$ (the computed
-maximum after the cutting) and we have $\qf<\qmax$. In this case
-the areas will we drained into the river once the level becomes less
-than $\qmin$ again.
-\item Similar to the previous stage, but now we forecast that, even using
-the toal capacity $W$, we will have $\qf>\qmax$. In this case we
-can avoid overflooding the areas, but want to delay this moment as
-far as possible.
-\item The hydrogram is not unimodal and $\qi>\qmao$, but $\qf<\qmax$.
-This is similar to the stage~2.
-\item Like stage~4 but now $\qf>\qmax$. This is similar to the stage~3.
-\end{enumerate}
-The forecast discharge $q(t)$ will be converted to $\tilde{q}(t)$
-by the control actions such that:
-\begin{itemize}
-\item $q(t)=\tilde{q}(t)$ except for $t\in I=[a,b]$ (the controlling period) 
-\item If for all $t$, $q(t)<\qmin$, then $q(t)=\tilde{q}(t)$ (No gate
-opening below this level) 
-\item For all $t$: $\tilde{q}(t)\leq q(t)$, for all $t$; 
-\item Denote by $W$ the total capacity of the floodable areas, Then \begin{equation}
-\int(q(t)-\tilde{q}(t))\, dt\leq W.\label{eq:capacity}\end{equation}
-
-\item If possible, ensure that $\qf=\max\tilde{q}<\qmax$ 
-\end{itemize}
-Define $R=Q-\tilde{Q}$. The previous conditions imply that $R$ is
-positive, has support on $I$ and $\int R\, dt\leq V$. 
-
-Let $I=(a,b)$ the control period. It is clear that to minimize $\max\tilde{q}$
-this function must be constant $\tilde{q}(t)=\qf$ on $I$, for otherwise
-we could replace it for a constant equal to its mean value on $I$.
-Thus \eqref{eq:capacity} could be written as: \begin{equation}
-\int_{a}^{b}q\, dt\leq\qf(b-a)+W,\label{eq:prob1}\end{equation}
- and the problem is to find $a$, $b$ and fulfiling \eqref{eq:prob1}
-with $\qf<\qmax$. Add $Q(a)=Q(b)=q$ to \eqref{eq:prob1} and we
-are set. To cut the most of the water we may impose equality on condition
-\eqref{eq:prob1}. 
+Flooding resulting from excessive precipitaion and surface runoff is a principle cause of significant damage, loss of property, and human suffering throughout the world.  During the GEMT 2010 study group at the Centre de Recerca Matemàtica(UAB) in Barcelona our team was given the task of determining a mathematical model to optimize gate operation along the Ebro River in Spain.   We designed a simple model in which we assumed that the flood wave would maintain its original shape as it propagated downstream.  This simplified model of the situation allowed us to look more closely at the mathematics involved in river flooding and gain some insight on a basic strategy for regulating the flood gates.  In addition to deriving this model for gate regulation we also investigated the costs associated to the situation when $q_f > q_{max}$, i.e. the situation where flooding cannot be avoided.  In this situation it is important to minimize the costs in terms of human suffering and property damage.  We investigate in this paper two methods for approaching the situation where flooding cannot be avoided, there are two methods to consider in this case, Strategy A: opening the gates when $q_f$ is achieved, or Strategy B: opening the gates when $q_{max}$ is achieved, this paper will discuss the analysis of both strategies in detail.  Finally at the conclusion of our analysis we will state some future problems that might be taken up by our group or other researchers with an interest in this problem.  
 
 
-\subsection{The case of monotonic hydrograms}
+\section{First Simple Model}
 
-When $q(t)$ has a single maximum at the time instant $t_{0}\leq t_{m}\leq t_{1}$
-is it possible. Pick a reference instant $t_{0}$ before the start
-of the flood and define for all $0<y\leq\qi$ \[
-V(y)=\int_{t_{0}}^{t_{1}}\left[q(t)-y\right]_{+}\, dt\leq W,\]
-where $\left[x\right]_{+}=\max\{x,0\}$. This expression could be
-written on the interval $(a,b)$ defined by the condition $q(t)\geq\qf$,
-as an iterated integral as\[
-V(y)=\int_{a}^{b}\left(\int_{y}^{q(t)}dq\right)dt=\int_{y}^{\qi}\left(\int_{t_{-}(q)}^{t_{+}(q)}dt\right)dq=\int_{y}^{\qi}(t_{+}(q)-t_{-}(q))\, dq,\]
-by inverting the ordering of the integration and where $t_{-}(q)$
-(respectively $t_{+}(q)$) is the unique $t<t_{\mbox{m}}$ (respectively
-$t>t_{\mbox{m}}$) with $q(t)=q$. Since $V'(y)=t_{-}(y)-t_{+}(y)\leq0$,
-$V\geq0$ is decreasing with $V(\qi)=0$ and it is easy to find the
-point $\qf$ such that $V(\qf)=W$ by bisection or inverse interpolation.
+As a simple first approximation, we ignored the geometry of the river bed and assumed that the flood wave would maintain its shape as it propagated down the river. Given that opening a gate to a floodplain can reduce the flood by a given volume $W$, we look for times $t_1$ and $t_2$ to open and close the gate in order to reduce the flood by this area optimally. Mathematically speaking, if we define the height of a flood wave as $Q(t)$, then we look for $t_1$ and $t_2$ such that
+\marginpar{Change the model!}
+\begin{equation}
+\int_{t_1}^{t_2} Q(s) ds = W
+\end{equation}
+By optimally, we mean that we would like the gate to be open during the peak of the flood, essentially levelling the peak out. So we would want $Q(t_1)=Q(t_2)$ which is what we look for next.
+
+Now a flood wave would be measured by measuring its height at increments of time, giving us values of $Q$ at discrete times $t$. If we define the volume of water passing through a given point as $V$, we get
+\begin{equation}
+V(t)=\int_0^t Q(s) ds 
+\end{equation}
+or for discrete values of $Q$ sampled a time $dt$ apart, 
+\begin{equation}
+V(t)= dt \sum Q(t)
+\end{equation}
+This is now a monotone increasing function of $t$ (and is hence invertible). 
+
+Since $Q$ is a function of $t$ alone, we can just write it as a function of $V$:
+\begin{equation}
+Q(t)=Q(t(V))=Q(V)
+\end{equation}
+and so the condition $Q(t_1)=Q(t_2)$ becomes $Q(V+W)=Q(V)$.
+
+This is equivalent to looking for the zeros of the function $f:[0,V_{max}] \rightarrow \mathbb{R}$ given by
+\begin{equation}
+f(V)=Q(V+W)-Q(V)
+\end{equation}
+Having found this zero at a value $V_0$, we then know that the required times are $t_1=t(V_0)$,$t_2=t(V_0+W)$.
+
+\subsection{An Example}
+\marginpar{\scriptsize Numerical experiment instead?}
+In the problem we are given that the initial profile of the floodwave is a Gaussian:
+\begin{equation}
+Q(t)=Q_p \exp(-\frac{t^2}{2t_b^2})
+\end{equation}
+where $Q_p$ is the peak of the flood, and $t_b$ is the duration of the flood. So in this case
+\begin{align}
+V(t)&=Q_p \int_{-\infty}^t \exp(-\frac{s^2}{2t_b^2}) ds \notag \\
+ &=Q_p t_b \sqrt{\frac{\pi}{2}} \erf(\frac{t}{t_b\sqrt{2}})
+\end{align}
+giving us that 
+\begin{equation}
+t(V)=t_b\sqrt{2}\erf^{-1}(\frac{V}{Q_p t_b} \sqrt{\frac{2}{\pi}})
+\end{equation}
+and
+\begin{equation}
+Q(V)=Q(t(V))=Q_p \exp \bigl( -[\erf^{-1}(\frac{V}{Q_p t_b} \sqrt{\frac{2}{\pi}})]^2 \bigr) 
+\end{equation}
+
+Here's a diagram:
+
+\marginpar{\scriptsize Where are the figures?}
+\begin{figure} \centering
+\includegraphics[width=8cm]{fig1}
+\caption{Flux versus time for simple Gaussian Peak}
+\label{1}
+\end{figure}
 
 
-\subsection{A numerical experiment}
+\section{Heavy Flooding}
 
-??Describe the experiment??
+However, when the flooding is particularly heavy, the capacity of the floodplains maybe insufficient. In this case, even when the peak of the flood is reduced by $W$, it is still higher than $Q_{max}$ the levee height, causing floods. In this situation we have two options for controlling the gates, the first strategy is that the gates are opened as soon as the water level reaches $Q_{max}$ and the resevoir is filled to capacity, hence reducing the front of the floodwave. This then gives us more time to deal with the flood, e.g. preparing to open more gates downstream. 
 
-%
-\begin{figure}
+Here's a diagram:
 
+\begin{figure} \centering
+\includegraphics[width=8cm]{fig2}
+\caption{Flux versus time for a peak where flooding is inevitable}
+\label{1}
+\end{figure}
 
-\begin{centering}
-\includegraphics[scale=0.8]{cut}
-\par\end{centering}
+In the case of flows with multiple flood waves it is always ideal to open the gates at $Q_{max}$ instead of $Q_f$ as it allows some capacity of the floodplain to be reserved for later flood waves. Thus when we have multiple flood waves we will never open the gates before $Q = Q_{max}$.  
 
-\caption{\textbf{Left}: $V(q)$ for the test function with the cut volume $W=22.0$
-corresponding to $q=\qf$.\textbf{ Right}: The cut volume is the part
-of the graph of the test function above $q=\qf$. }
+Here are a few diagrams of the situation involving multiple waves:
 
+\begin{figure} \centering
+\includegraphics[width=8cm]{fig5}
+\caption{Opening the gate at $Q_{max}$ allows maximum remaining capcity for the second flood wave.}
+\label{2}
+\end{figure}
+
+The next diagram illustrates a case where we can do even better:
+
+\begin{figure} \centering
+\includegraphics[width=8cm]{fig7}
+\caption{Opening the gate at $Q_{max}$ allows us to prevent flooding entirely in this case.}
+\label{3}
 \end{figure}
 
 
 
-\section{Incorporating cost}
 
-Let us now modify the assumption that the impact of flooding the urban
-areas is constant by making it depend on the number of residents affected
-by the flooding. Assume we have geographic data to describe $C(h)$,
-the number of residents that live below heigh $h$. Let $C_{\mbox{f}}$
-be the cost of flooding the fields, then the total cost will be \[
-C=\left\{ \begin{array}{cc}
-C(h) & \mbox{no flooding}\\
-C_{\mbox{f}}+C(h(q_{*})) & \mbox{when flooding}\end{array}\right.\]
-?? 
+\section{Cost modelling of the two main strategies in a flooding}
 
+\subsection*{Main problem: there are two possible strategies}
+We have two possible strategies to follow when scenario $q_{max}<q_f$ occurs and thus we can not avoid the flood: we can either choose to open the gate when the flow $q$ achives $q_{max}$ or open it when $q_f$ is achived. Each strategy has its advantages: 
+\begin{itemize}
+\item On the one hand, if we open the gate at $q_{max}$, we are going to be delaying the flood as much as we can, but when it arribes, the effects will be quite important. 
+\item On the other hand, if we wait to open the gates until $q$ achieves $q_f$, the flood will arrive sooner, but its effects will be reduced, because the intensity of the flow is going to be lower.
+\end{itemize}
+
+\subsection*{Designing a cost function: a possible solution}
+Thus, we want to design a cost function in order to measure the ``cost'' of each strategy. This cost function will take on account the number of affected people depending on the heigh of the water in the flood and also the time that the strategy is are able to delay it. The cost function that we are going to consider is defined as equation \ref{cost} shows. The cost that we are assuming from an initial time $t_i$ to a certain time $t$ is given by:
+\begin{equation}
+C(t)=\int_{t_i}^{t}\frac{\rho(h(q(t)))}{t}dt,
+\label{cost}
+\end{equation}
+where $\rho$ is the density of population that lives below a certain heigh $h$ (where the heigh depends on $q$, both $q$ and $h$ known). We have divided the density by $t$ in order to ``decrease the cost'' when increasing the time, since we want to minimize the effects of the flood but also give time to the population to leave the most affected zones. If we want to give more importance to the delay of the flood we can change the modelling cost and use some other $t^r$, $r>1$.
+
+\subsection*{Finding the strategy that minimizes the cost function}
+We want then to compute the cost function for each one of the two main strategies to follow in a flooding scenario. Hence, the most valid strategy will be the one that gives the minimum final cost at the ending time $t_f$.
+
+\subsubsection*{Strategy A: opening the gates when $q_f$ is achieved}
+\begin{figure} \centering
+\includegraphics[width=8cm]{basicA}
+\caption{Flow diagram for strategy A}
+\label{A}
+\end{figure}
+Figure \ref{A} shows that with strategy A we are going to be able to eliminate the flow marked in light blue. The dangerous flow that we are not going to be able to stop and that is going to be penalized by the cost function is marked in red. To be able to compute the cost function, we need the population density of the affected zone. However, we can easily find an upper bound for the cost of this strategy:
+\begin{eqnarray*}
+C(t_f)&=&\int_{t_i}^{t_f}\frac{\rho(h(q(t)))}{t}dt\overset{q(t)\leq q_f(t)\ \forall t}{\leq} \int_{t_i}^{t_f}\frac{\rho(h(q_f(t)))}{t}dt\\
+&=&\int_{t_i}^{t_f}\frac{\rho_{q_f}}{t}dt=\rho_q\cdot\ln(\frac{t_f}{t_i}),
+\end{eqnarray*}
+where we have denoted by ${\rho_{q_f}}$ the density of population that lives below $h(q_f)$.
+
+Thus, we can bound
+\marginpar{\tiny this may be useful if we could compare it with B... but we are not able to do so... we need $\rho$ in order to be able to say something)}
+the cost of strategy A as
+\begin{equation}
+C_A\leq\rho_q\cdot\ln(\frac{t_f}{t_i}),
+\label{CA}
+\end{equation} 
+where $\rho_{q_f},\ t_i \text{ and } t_f$ are all known.
+
+\subsubsection*{Strategy B: opening the gates when $q_{max}$ is achieved}
+\begin{figure} \centering
+\includegraphics[width=8cm]{basicB}
+\caption{Flow diagram for strategy B}
+\label{B}
+\end{figure}
+With strategy B we find that despite reaching higher flow values, the time in which $q_{max}$ is achieved is delayed, and thus there are no ``human'' costs until a bigger time than the one used in strategy A. However, we are just able to delay the flow into a known time $t_m$, where the auxiliar area is full and we can not take more water from the river. Thus, the cost of strategy B is
+\begin{eqnarray*}
+C(t_f)=\int_{t_i}^{t_f}\frac{\rho(h(q(t)))}{t}dt=\int_{t_m}^{t_f}\frac{\rho(h(q(t)))}{t}dt,
+\end{eqnarray*}
+where we must recall that all the data required in the integral is known, and thus, in a particular case it is straight forward to compute the cost.
+
+Hence,
+\begin{equation}
+C_B=\int_{t_m}^{t_f}\frac{\rho(h(q(t)))}{t}dt,
+\label{costB}
+\end{equation}
+and then depending on the scenario that is placed we can compute both $C_A$ and $C_B$ and have a reference of which one of the strategies will bring up more advantages.
+
+\section{Conclusion and Further Work}
+
+In this paper we have stated an algorithm for determining the opening and closing times of a single flood gate.  In addition we have studied how cost functions can be used to minimize damage and hardship caused by flooding in highly populated areas along the Ebro River.
+
+We propose that in future research studies the case of gate control is considered more closely, perhaps in conjunction with the idea of minimizing costs in the case that flooding cannot be avoided.  The most important extension of our ideas is to work with multiple gates and multiple flood waves.  This case will be more complex but also will more closely impact actual implementation of gate control along the Ebro River.  By assigning a cost to the flooding of particular floodplains it will be possible to obtain the minimum amount of damage in the case that we cannot prevent a flood with the gate control scheme.  
+
+
+
+
+
+
+
+\end{document}
