@@ -4,16 +4,20 @@ import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
-mode= 'save'
-
-# http://en.wikipedia.org/wiki/Rayleigh_distribution
-ray = lambda t,sigma=1: t>0 and t/sigma**2*exp(-t**2/(2*sigma**2)) or 0.
-
-dt = 1.
+mode= 'show'
+N = 100
+M = 1000
 s = tm = 10
 a = -10
 b = 100
-ts = linspace(a,b,1000)
+
+# http://en.wikipedia.org/wiki/Rayleigh_distribution
+# cumulative distribution: 1-exp(-x^2/(2*sigma**2))
+ray = lambda t,sigma=1: t>0 and t/sigma**2*exp(-t**2/(2*sigma**2)) or 0.
+pray = lambda t,sigma=1: t>0 and 1 - exp(-t**2/2/sigma**2) or 0.
+
+
+ts = linspace(a,b,M)
 qs = array([1 + 40*ray(t,tm) for t in ts])
 tqs = array([ts,qs]).transpose()
 qmax = max(qs)
@@ -31,7 +35,7 @@ undef = NaN
 t1 = lambda q: interp(q, tqs1[:,1], tqs1[:,0],left=undef, right=undef)
 t2 = lambda q: interp(q, tqs2[::-1,1], tqs2[::-1,0], left=undef, right=undef)
 
-ys = linspace(0,qmax,100)[:-1]
+ys = linspace(0,qmax,N)[:-1]
 dq = ys[1]-ys[0]
 dt = t2(ys)-t1(ys)
 #print dt
@@ -48,6 +52,9 @@ W = 22.
 qf = interp(W,vy,ys[::-1])
 print "W = ", W
 print "Qf = ", qf
+print "t1,t2 = ", t1(qf), t2(qf)
+pq = tuple([t + 40*pray(t,tm) for t in (t1(qf),t2(qf))])
+print "cumulative difference =",pq[1] - pq[0], (t2(qf) - t1(qf))*qf + W 
 ax1.plot([1,qf,qf],[W,W,0],'g:')
 ax2.plot(ts,qs,'b-')
 ax2.plot([a,b],[qf,qf],'r:')
