@@ -1,5 +1,8 @@
 \def\erf{\mathord{\rm erf}}
 \def\q#1{q_{\mbox{\scriptsize #1}}}
+\def\tp{t_{+}}
+\def\tm{t_{-}}
+\def\ppart#1{\left[#1\right]_{+}}
 
 \section{Motivation} % (fold)
 
@@ -22,9 +25,9 @@ open and close the gate in order to reduce the flood by this area optimally.
 Mathematically speaking, if we define the discharge of a flood wave at the gate point as $q(t)$ and
 pick a reference instant $t_{0}$ before the start of the flood and define for all $0<y\leq\q{i}$
 \begin{equation}
-V(y)=\int_{t_{0}}^{t_{1}}\left[q(t)-y\right]_{+}\, dt\leq W,
+V(y)=\int_{t_{0}}^{t_{1}}\ppart{q(t)-y}\, dt\leq W,
 \end{equation}
-where $\left[x\right]_{+}=\max\{x,0\}$ and $\q{i}$ is the forecast maximum discharge
+where $\ppart x =\max\{x,0\}$ and $\q{i}$ is the forecast maximum discharge
 (which is taken at instant $t=t_m$).
 This expression could be
 written on the time interval defined by the condition $q(a)=q(b)=\q{f}$ and $q(t) > \q{f}$ for $t\in(a,b)$
@@ -36,12 +39,12 @@ V(y)=
 By inverting the order of the integration, we get
 \begin{equation}
 V(y)=
-\int_{y}^{\q{i}}\left(\int_{t_{-}(q)}^{t_{+}(q)}dt\right)dq=
-\int_{y}^{\q{i}}(t_{+}(q)-t_{-}(q))\, dq,	
+\int_{y}^{\q{i}}\left(\int_{\tm(q)}^{\tp(q)}dt\right)dq=
+\int_{y}^{\q{i}}(\tp(q)-\tm(q))\, dq,	
 \end{equation}
-where $t_{-}(q)$
-(respectively $t_{+}(q)$) is the unique $t<t_{m}$ (respectively
-$t>t_{m}$) with $q(t)=q$. Since $V'(y)=t_{-}(y)-t_{+}(y)\leq0$,
+where $\tm(q)$
+(respectively $\tp(q)$) is the unique $t<t_{m}$ (respectively
+$t>t_{m}$) with $q(t)=q$. Since $V'(y)=\tm(y)-\tp(y)\leq0$,
 $V(y)$ is decreasing with $V(\q{i})=0$ and it is easy to find the
 unique point $\q{f}$ such that $V(\q{f})=W$ by numerical integration
 followed by bisection or inverse interpolation.
@@ -49,35 +52,39 @@ followed by bisection or inverse interpolation.
 
 
 
-\subsection{An Example}
-\marginpar{\scriptsize Numerical experiment instead?}
-In the problem we are given that the initial profile of the floodwave is a Gaussian:
-\begin{equation}
-q(t)=q_p \exp(-\frac{t^2}{2t_b^2})
-\end{equation}
-where $q_p$ is the peak of the flood, and $t_b$ is the duration of the flood. So in this case
-\begin{align}
-V(t)&=q_p \int_{-\infty}^t \exp(-\frac{s^2}{2t_b^2}) ds \notag \\
- &=q_p t_b \sqrt{\frac{\pi}{2}} \erf(\frac{t}{t_b\sqrt{2}})
-\end{align}
-giving us that 
-\begin{equation}
-t(V)=t_b\sqrt{2}\erf^{-1}(\frac{V}{q_p t_b} \sqrt{\frac{2}{\pi}})
-\end{equation}
-and
-\begin{equation}
-q(V)=q(t(V))=q_p \exp \bigl( -[\erf^{-1}(\frac{V}{q_p t_b} \sqrt{\frac{2}{\pi}})]^2 \bigr) 
-\end{equation}
+\subsection{A numerical experiment}
 
-Here's a diagram:
-
-\marginpar{\scriptsize Where are the figures?}
-\begin{figure} \centering
-\includegraphics[width=8cm]{fig1}
-\caption{Flux versus time for simple Gaussian Peak}
-\label{1}
+We tried this idea with a mock floodwave made by adding a Rayleigh function to a constant flow
+\begin{equation}
+q(t) = 1 + 40 \frac{\ppart t}{\sigma^2} e^{-t^2/(2\sigma^2)} 
+\end{equation}
+with $\sigma=10$ and a goal capacity of $W=22$.
+The discharge is sampled between $t=-10$ and $t=100$ for 1000 points (Assuming one hour as time unit, this means roughly a sample each 6 minutes).
+The procedure was as follows:
+\begin{enumerate}
+	\item The maximum discharge $\q i$ is located at point $t_m$ by inspecting the first differences of the sampled data ($M$ data points). This partitions the time samples in two sets: the domains of $\tm$ and $\tp$.
+	\item The difference $\tp(q) - \tm(q)$ is approximated by inverse interpolation of $q(t)$ data, for a uniform sampling of $N$ values between the steady flow ($q=1$) and the maximum flow ($q=\q i$).
+	\item By cumulative addition we approximate $y\mapsto \int_y^{\q i}(\tp(q) - \tm(q))\,dq$;
+    \item Again by inverse interpolation of the above table, we compute $q=\q f$ for $y=W$.
+\end{enumerate}
+\begin{figure}
+\begin{centering}\
+\includegraphics[scale=0.8]{cut}
+\caption{Flux versus time for a peak where flooding is inevitable}
+\label{cut}		
+\end{centering}
+\caption{\textbf{Left}: $V(q)$ for the test function with the cut volume $W=22.0$
+corresponding to $q=\q f$.\textbf{ Right}: The cut volume is the part
+of the graph of the test function above $q=\q f$. }
 \end{figure}
-% (end)
+
+For $M=1000$ and $N=100$ and $W=22$, we got $\q f\approx 1.70$,  $\tm(\q f)=1.782$ and $\tp(\q f)=22.613$. To check the accuracy of this simple procedure, we compare the integral (which could be computed exactly in this case as $F(t)=t-k(1-e^{-t^2/(2\sigma^2)})$) for $k=40$ and $\sigma=10$ giving
+\begin{equation}
+\int_{\tm(\q f)}^{\tp(\q f)}q(t)\,dt = F(\tp(\q f)) - F(\tm(\q f)) = 57.09,
+\end{equation}
+while $W + \q f(\tp(\q f) - \tm(\q f)) = 57.44$.
+
+
 
 \section{Heavy Flooding} % (fold)
 
@@ -85,7 +92,7 @@ However, when the flooding is particularly heavy, the capacity of the floodplain
 
 Here's a diagram:
 
-\begin{figure} \centering
+\begin{figure}
 \includegraphics[width=8cm]{fig2}
 \caption{Flux versus time for a peak where flooding is inevitable}
 \label{1bis}
@@ -95,7 +102,7 @@ In the case of flows with multiple flood waves it is always ideal to open the ga
 
 Here are a few diagrams of the situation involving multiple waves:
 
-\begin{figure} \centering
+\begin{figure}
 \includegraphics[width=8cm]{fig5}
 \caption{Opening the gate at $\q{max}$ allows maximum remaining capcity for the second flood wave.}
 \label{2}
