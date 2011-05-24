@@ -4,7 +4,7 @@ import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
-mode= 'show'
+mode= 'save'
 N = 100
 M = 1000
 s = tm = 10

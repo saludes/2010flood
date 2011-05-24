@@ -117,67 +117,121 @@ The next diagram illustrates a case where we can do even better:
 \end{figure}
 % (end)
 
-\section{Cost modelling of the two main strategies in a flooding} % (fold)
+\section{Cost modelling of the main strategies in a flooding} % (fold)
+%\subsection*{Main problem: there are two possible strategies}
+%The objective of this section is to extract a numerical criteria based on the observations that have been carried out in the previous sections. Note that assuming that a heavy flooding is about to happen we may be able to define two possible strategies to follow.
+In this section we assume that a flood that can not be totally prevented is about to happen.
+ Recall that a flooding  corresponds to scenario $q_{max}<q_f$ and then, any possible gate opening strategy can avoid that the water level of Ebro surpasses at the analysed point the constructed walls and that floods the surrounding lands. When this happens, the controller of the gate opening must choose when to open the gate in order to reduce as much as it is possible the damage caused by the flooding. In this case, note that two main strategies can be raised: the gate can be either opened when the flow $q$ achieves $q_{max}$ or it may be opened when $q_f$ is achieved.
 
-\subsection*{Main problem: there are two possible strategies}
-We have two possible strategies to follow when scenario $\q{max}<\q{f}$ occurs and thus we can not avoid the flood: we can either choose to open the gate when the flow $q$ achives $\q{max}$ or open it when $\q{f}$ is achived. Each strategy has its advantages: 
+The objective of this section is to extract a numerical criteria based on the observations that have been carried out in the previous sections that allows us to choose the best strategy in each possible situation.
+
+ As we are going to analyse, each strategy has advantages and drawbacks: 
 \begin{itemize}
-\item On the one hand, if we open the gate at $\q{max}$, we are going to be delaying the flood as much as we can, but when it arribes, the effects will be quite important. 
-\item On the other hand, if we wait to open the gates until $q$ achieves $\q{f}$, the flood will arrive sooner, but its effects will be reduced, because the intensity of the flow is going to be lower.
-\end{itemize}
-
-\subsection*{Designing a cost function: a possible solution}
-Thus, we want to design a cost function in order to measure the ``cost'' of each strategy. This cost function will take on account the number of affected people depending on the heigh of the water in the flood and also the time that the strategy is are able to delay it. The cost function that we are going to consider is defined as equation \ref{cost} shows. The cost that we are assuming from an initial time $t_i$ to a certain time $t$ is given by:
-\begin{equation}
-C(t)=\int_{t_i}^{t}\frac{\rho(h(q(t)))}{t}dt,
-\label{cost}
-\end{equation}
-where $\rho$ is the density of population that lives below a certain heigh $h$ (where the heigh depends on $q$, both $q$ and $h$ known). We have divided the density by $t$ in order to ``decrease the cost'' when increasing the time, since we want to minimize the effects of the flood but also give time to the population to leave the most affected zones. If we want to give more importance to the delay of the flood we can change the modelling cost and use some other $t^r$, $r>1$.
-
-\subsection*{Finding the strategy that minimizes the cost function}
-We want then to compute the cost function for each one of the two main strategies to follow in a flooding scenario. Hence, the most valid strategy will be the one that gives the minimum final cost at the ending time $t_f$.
-
-\subsubsection*{Strategy A: opening the gates when $\q{f}$ is achieved}
-\begin{figure} \centering
+\item On the one hand, if the gate is opened at $q_{max}$, the flood is going to be delayed as much as time as possible. However, once the flooding capacity is overpassed, we are not going to have any control of the amount of water that the river carries from this point on. Hence, when the flooding arrives to the most sensitive areas the biggest intensity of the  flood will not be mitigated.
+%effects will be unknown.
+\begin{figure}[H] \centering
 \includegraphics[width=8cm]{basicA}
 \caption{Flow diagram for strategy A}
 \label{A}
-\end{figure}
-Figure \ref{A} shows that with strategy A we are going to be able to eliminate the flow marked in light blue. The dangerous flow that we are not going to be able to stop and that is going to be penalized by the cost function is marked in red. To be able to compute the cost function, we need the population density of the affected zone. However, we can easily find an upper bound for the cost of this strategy:
-\begin{eqnarray*}
-C(t_f)&=&\int_{t_i}^{t_f}\frac{\rho(h(q(t)))}{t}dt\overset{q(t)\leq \q{f}(t)\ \forall t}{\leq} \int_{t_i}^{t_f}\frac{\rho(h(\q{f}(t)))}{t}dt\\
-&=&\int_{t_i}^{t_f}\frac{\rho_{\q{f}}}{t}dt=\rho_q\cdot\ln(\frac{t_f}{t_i}),
-\end{eqnarray*}
-where we have denoted by ${\rho_{\q{f}}}$ the density of population that lives below $h(\q{f})$.
+\end{figure} 
+Figure \ref{A} shows schematically the inherent idea that defines strategy A. The water coloured in light blue is the amount of water that is able to be drained through the gates. The water coloured in red corresponds to the amount of water that is going to flood the area of interest where we analyse the scenario. Hence, in the presented strategy, once the water overpasses the acceptable level of the river, the door is opened. Then, while the flooding area is able to drain water, the flood is prevented. However, once we are not able to drain more water through the gates, all the remaining flooding water will continue its way, flooding freely the area of interest.
+%areas that we wanted to protect as much as we could.
 
-Thus, we can bound
-\marginpar{\tiny this may be useful if we could compare it with B... but we are not able to do so... we need $\rho$ in order to be able to say something)}
-the cost of strategy A as
-\begin{equation}
-C_A\leq\rho_q\cdot\ln(\frac{t_f}{t_i}),
-\label{CA}
-\end{equation} 
-where $\rho_{\q{f}},\ t_i \text{ and } t_f$ are all known.
-
-\subsubsection*{Strategy B: opening the gates when $\q{max}$ is achieved}
-\begin{figure} \centering
+\item On the other hand, the controller of the gate can wait to open it until $q$ achieves $q_f$. Then, the flooding of the sensitive areas starts earlier, whereas the most dangerous peak in the water amount that the flooding carries on is going to be cut out. This way, the main effects of the flooding will be reduced, because the intensity of the flow is going to be lower. However, we are going to let less time to the affected population to leave the affected areas.
+\begin{figure}[H] \centering
 \includegraphics[width=8cm]{basicB}
 \caption{Flow diagram for strategy B}
 \label{B}
 \end{figure}
-With strategy B we find that despite reaching higher flow values, the time in which $\q{max}$ is achieved is delayed, and thus there are no ``human'' costs until a bigger time than the one used in strategy A. However, we are just able to delay the flow into a known time $t_m$, where the auxiliar area is full and we can not take more water from the river. Thus, the cost of strategy B is
+Figure \ref{B} shows a water profile of the river channel where strategy B is applied. The colouring scheme is the same than the presented on Figure \ref{A}. Hence, Figure \ref{B} clearly presents the main drawback and the main advantage of this strategy in front of strategy A. First, note that the red profile starts earlier than in the previous strategy, and hence, the flooding is not delayed as it happened before. However, the red profile does not get to the high values that strategy A achieved. Hence, strategy B avoids the flood in the peak where it has more intensity.
+\end{itemize}
+
+\subsection{Damage cost function}
+Accounting for a correct selection of the strategy to follow in each possible scenario, we aim to define a cost 
+ function in order to measure the human, economical,$\ldots$ cost of each strategy. The defined cost function takes on account two main factors:
+ \begin{itemize}
+ \item the number of affected people depending on the heigh of the water in the flood, and 
+ \item the time that the strategy is able to delay the flood.
+ \end{itemize}
+  %The cost function that we are going to consider is defined as equation \ref{cost} shows. 
+%  The cost that we are assuming from an initial time $t_i$ to a certain time $t$ is given by:
+
+%Assuming that the flooding starts at a given time $t_i$ and that it lasts until a certain time $t$, the proposed cost function is
+Assuming that the flooding starts at a given time $t_i$, the proposed cost function of the flood at a certain time $t$ is
+\begin{equation}
+C(t)=\int_{t_i}^{t}\frac{\rho(h(q(t)))}{t}dt,
+\label{cost}
+\end{equation}
+where $\rho$ is the density of population that lives below a certain heigh $h$. Note that the heigh of the flooding is a function of of $q$ (the height that the flooding affects to depends on $q$), and that both $q$ and $h$ are known in any possible scenario. We have divided the density by $t$ in order to ``decrease the cost'' when increasing the time, since we want to minimize the effects of the flood but we also want to penalise the time that a strategy  gives to the population to leave the affected zone. 
+
+Note that in this cost function definition, it can be decided if more importance is given to the amount of affected people, or to the delaying of the flooding. For instance, if we want to give more importance to the delay of the flood we can change the modelling cost and use some other $t^r$, $r>1$, penalising then an strategy that does not let time enough to the population to evacuate. Analogously, if we choose not to involve the delaying time in the cost penalization, we can also take $r=0$.
+
+\subsection{Finding the strategy that minimizes the cost function}
+Given an scenario, we do know all the variables that are involved in the definition of the cost function \eqref{cost}. Hence, in order to execute the better strategy, we only require to compute the integral \eqref{cost} and take the strategy with a lower cost.
+%We want then to compute the cost function for each one of the two main strategies to follow in a flooding scenario. Hence, 
+ The most valid strategy is the one that results in the minimum cost at the ending time of the flood, $t_f$.
+ 
+ However, it may be interesting to be able to know a priori bounds about the possible cost of each situation. Hence, we could have information before the flooding occurs about how each strategy behaves and, for example, we could be able to fix a default strategy that is known to be safer through the a priori bounds. Furthermore, if we ever are able to find lower and upper bounds for both strategies we may find interesting conclusions about the procedure to follow when a flood occurs.
+
+\begin{itemize}
+\item Strategy A: opening the gates when $q_{max}$ is achieved.
+
+\hspace{1.5cm}
+With strategy A we find that despite reaching higher flow values, the time in which $q_{max}$ is surpassed is delayed, and thus there are no costs  for a longer time than in strategy A. However, we are just able to delay the flow until a known time $t_m$, where the auxiliary flooding area is full and we can not take more water from the river. Thus, the cost of strategy A is
 \begin{eqnarray*}
 C(t_f)=\int_{t_i}^{t_f}\frac{\rho(h(q(t)))}{t}dt=\int_{t_m}^{t_f}\frac{\rho(h(q(t)))}{t}dt,
 \end{eqnarray*}
 where we must recall that all the data required in the integral is known, and thus, in a particular case it is straight forward to compute the cost.
-
+\newline
 Hence,
 \begin{equation}
-C_B=\int_{t_m}^{t_f}\frac{\rho(h(q(t)))}{t}dt,
+C_A=\int_{t_m}^{t_f}\frac{\rho(h(q(t)))}{t}dt
+\label{costA}
+\end{equation}
+is the cost of strategy A.
+
+Note that an upper bound of this expression can be found:
+\begin{eqnarray*}
+C_A&=&\int_{t_m}^{t_f}\frac{\rho(h(q(t)))}{t}dt 
+\leq\int_{t_m}^{t_f}\frac{\rho_*}{t}dt \\
+&=& \rho_*\cdot \ln (\frac{t_f}{t_m}):=\hat{C}_A,
+\end{eqnarray*}
+where $\rho_*=\rho(h(q_*))$, being $q_*=\max_{t\in(t_m,t_f)}q(t)$, the peak value of $q$. Recall that this bound may be slightly coarse, but it is useful in the sense that if the cost that the bound assigns is acceptable compared to B, then the strategy is valid for our purposes.
+
+\item Strategy B: opening the gates when $q_{f}$ is achieved.
+
+\hspace{1.5cm}
+%Figure \ref{B} shows that with strategy A we are going to be able to eliminate the flow marked in light blue. The dangerous flow that we are not going to be able to stop  is going to be penalized by the cost function and is marked in red. To be able to compute the cost function, we need the population density of the affected zone. However, we can easily find an upper bound for the cost of this strategy:
+For this strategy we can easily find an accurate upper bound for its cost. Note that except at the beginning and at the end of the flow diagram, the flow that is flooding the area of interest is know, since we cut it using the gates at $q_f$ value. Hence, we control that $q(t)=q_f$ in all the diagram except in a small region, where $q(t)\leq q_f\ \forall t$. Thus,
+\begin{eqnarray*}
+C(t_f)&=&\int_{t_i}^{t_f}\frac{\rho(h(q(t)))}{t}dt\overset{q(t)\leq q_f\ \forall t}{\leq} \int_{t_i}^{t_f}\frac{\rho(h(q_f))}{t}dt\\
+&=&\int_{t_i}^{t_f}\frac{\rho_{q_f}}{t}dt=\rho_{q_f}\cdot\ln(\frac{t_f}{t_i}),
+\end{eqnarray*}
+where we have denoted by ${\rho_{q_f}}$ the density of population that lives below $h(q_f)$.
+\newline
+Thus,
+\begin{equation}
+C_B=\int_{t_i}^{t_f}\frac{\rho(h(q(t)))}{t}dt
 \label{costB}
 \end{equation}
-and then depending on the scenario that is placed we can compute both $C_A$ and $C_B$ and have a reference of which one of the strategies will bring up more advantages.
+is the cost of strategy B, and it can be bounded as
+\begin{equation}
+C_B\leq\rho_{q_f}\cdot\ln(\frac{t_f}{t_i}):=\hat{C}_B,
+\label{CB}
+\end{equation} 
+where $\rho_{q_f},\ t_i \text{ and } t_f$ are all known.
+
+%Recall that this is a useful bound, since it tells us a priori that the cost of this strategy is always going to be under $\rho_q\cdot\ln(\frac{t_f}{t_i})$. % If we assume that this is a feasible cost, we may be able always use this strategy
+\end{itemize}
+
+Depending on the scenario that is placed we can compute both $C_A$ and $C_B$ and have a reference of which one of the strategies will bring up more advantages. The bounds are simplified expressions that require less data and give useful information, since they tell the limit of the cost that the strategy may result in. 
+
+However, note that judging just by the a priori found bounds of both strategies no conclusions can be drawn about if there is one strategy that is always better than the other one just judging by either the affected population or the maximum flood capacity. No a priori conclusions can be extracted from the comparison $\hat{C}_A\overset{?}{\leq}\hat{C}_B$.
+
+Summarizing, we first have been able to develop two main strategies to deal with a flood. Moreover, we have defined a cost function that can be used as a key to choose the ideal strategy to select in each scenario. Two upper bounds of the cost of both strategies have been extracted. However, no conclusions about the selection of the best strategy can be drawn just by judging the a priori bounds.
+
 % (end)
+
 
 \section{Conclusion and Further Work} % (fold)
 
