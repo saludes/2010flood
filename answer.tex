@@ -6,7 +6,7 @@
 
 \section{Motivation} % (fold)
 
-Flooding resulting from excessive precipitaion and surface runoff is a principle cause of significant damage, loss of property, and human suffering throughout the world.  During the GEMT 2010 study group at the Centre de Recerca Matemàtica(UAB) in Barcelona our team was given the task of determining a mathematical model to optimize gate operation along the Ebro River in Spain.   We designed a simple model in which we assumed that the flood wave would maintain its original shape as it propagated downstream.  This simplified model of the situation allowed us to look more closely at the mathematics involved in river flooding and gain some insight on a basic strategy for regulating the flood gates.  In addition to deriving this model for gate regulation we also investigated the costs associated to the situation when $\q{f} > \q{max}$, i.e. the situation where flooding cannot be avoided.  In this situation it is important to minimize the costs in terms of human suffering and property damage.  We investigate in this paper two methods for approaching the situation where flooding cannot be avoided, there are two methods to consider in this case, Strategy A: opening the gates when $\q{f}$ is achieved, or Strategy B: opening the gates when $\q{max}$ is achieved, this paper will discuss the analysis of both strategies in detail.  Finally at the conclusion of our analysis we will state some future problems that might be taken up by our group or other researchers with an interest in this problem.
+Flooding resulting from excessive precipitation and surface runoff is a principle cause of significant damage, loss of property, and human suffering throughout the world.  During the GEMT 2010 study group at the Centre de Recerca Matemàtica(UAB) in Barcelona our team was given the task of determining a mathematical model to optimize gate operation along the Ebro River in Spain.   We designed a simple model in which we assumed that the flood wave would maintain its original shape as it propagated downstream.  This simplified model of the situation allowed us to look more closely at the mathematics involved in river flooding and gain some insight on a basic strategy for regulating the flood gates.  In addition to deriving this model for gate regulation we also investigated the costs associated to the situation when $\q{f} > \q{max}$, i.e. the situation where flooding cannot be avoided.  In this situation it is important to minimize the costs in terms of human suffering and property damage.  We investigate in this paper two methods for approaching the situation where flooding cannot be avoided, there are two methods to consider in this case, Strategy A: opening the gates when $\q{f}$ is achieved, or Strategy B: opening the gates when $\q{max}$ is achieved, this paper will discuss the analysis of both strategies in detail.  Finally at the conclusion of our analysis we will state some future problems that might be taken up by our group or other researchers with an interest in this problem.
 
 \subsection{States} 
 
@@ -16,14 +16,9 @@ upstream of the control point. Two parameters are relevant: the \emph{maximal
 flow} and the \emph{total volume} of the avenue.
 
 We assume that the water height at the control point is a increasing
-function of the flow $Q$ at that point.
+function of the flow $q$ at that point.
 
-Let us considere three states related to the flow $Q$:\global\long\def\Qmin{Q_{\mbox{min}}}
-%\global\long\def\Qf{Q_{\mbox{f}}}
-%\global\long\def\Qmao{Q_{\mbox{mao}}}
-%\global\long\def\Qmax{Q_{\mbox{max}}}
-%\global\long\def\Qi{Q_{\mbox{i}}}
-
+Let us considere three states related to the flow $q$:
 \begin{itemize}
 \item The \emph{steady state} corresponds to $q<\q{min}$, where $\q{min}$
 is the flow that brings the water at the control point high enough
@@ -41,7 +36,7 @@ For this the following control strategies are defined:
 \item If the maximum forecast flow $\q{i}$ is less than $\q{mao}$, the gates
 are not opened. 
 \item When $\q{i}>\q{mao}$ and $\q{f}<\q{max}$. In this case the goal is to minimize
-the ??. To compute this, one cuts from the hydrogram an area equivalent
+the peak discharge after leveling. To compute this, one cuts from the hydrogram an area equivalent
 to the capacity of the floodable areas, to get a maxim plateau of
 $\q{f}$ flow. 
 \end{itemize}
@@ -66,6 +61,7 @@ In this way we could use height and discharge interchangeably.
 
 Given that opening a gate to a floodplain can reduce the flood by a given volume $W$, we look for the set point $\q{f}$ to
 open and close the gate in order to reduce the flood by this area optimally.
+
 Mathematically speaking, we define the discharge of a flood wave at the gate point as $q(t)$ and
 choose a refrence interval $[t_0,t_1]$ containing the flood episode.
 For simplicity, assume as well that $q$ is unimodal and has a forecast maximum discharge $\q{i}$
