@@ -6,10 +6,11 @@
 
 \section{Motivation} % (fold)
 
-Flooding resulting from excessive precipitation and surface runoff is a principle cause of significant damage, loss of property, and human suffering throughout the world.  During the GEMT 2010 study group at the Centre de Recerca Matemàtica(UAB) in Barcelona our team was given the task of determining a mathematical model to optimize gate operation along the Ebro River in Spain.
+Flooding resulting from excessive precipitation and surface runoff is a principal cause of significant damage, loss of property, and human suffering throughout the world.  During the GEMT 2010 study group at the Centre de Recerca Matem\`atica(UAB) in Barcelona our team was given the task of determining a mathematical model to optimize gate operation along the Ebro River in Spain.
 Finding an optimal way to manage these gates is a prominent goal of the CTP projects PREGO (2008ITT00007) and GECOZI (2010CTP00043).
 
-We designed a simple model in which we assumed that the flood wave would maintain its original shape as it propagated downstream.  This simplified model of the situation allowed us to look more closely at the mathematics involved in river flooding and gain some insight on a basic strategy for regulating the flood gates.  In addition to deriving this model for gate regulation we also investigated the costs associated to the situation when $\q{f} > \q{mao}$, i.e. the situation where flooding cannot be avoided.  In this situation it is important to minimize the costs in terms of human suffering and property damage.  We investigate in this paper two methods for approaching the situation where flooding cannot be avoided, there are two methods to consider in this case, Strategy A: opening the gates when $\q{f}$ is achieved, or Strategy B: opening the gates when $\q{mao}$ is achieved, this paper will discuss the analysis of both strategies in detail.  Finally at the conclusion of our analysis we will state some future problems that might be taken up by our group or other researchers with an interest in this problem.
+We designed a simple model in which we assumed that the flood wave would maintain its original shape as it propagated downstream.  This simplified model of the situation allowed us to look more closely at the mathematics involved in river flooding and gain some insight on a basic strategy for regulating the flood gates.  In addition to deriving this model for gate regulation we also investigated the costs associated to the situation when flooding cannot be avoided.  In this situation it is important to minimize the costs in terms of human suffering and property damage.  We investigate in this paper two methods for approaching the situation where flooding cannot be avoided: Strategy A; opening the gates when the wave is about to overflow the gates; Strategy B: opening the gates when the typical maximal level is achieved.
+This paper will discuss the analysis of both strategies in detail.  Finally at the conclusion of our analysis we will state some future problems that might be taken up by our group or other researchers with an interest in this problem.
 
 \subsection{States} 
 
@@ -18,10 +19,10 @@ the flow as a function of time) computed from observations at a point
 upstream of the control point. Two parameters are relevant: the \emph{maximal
 flow} and the \emph{total volume} of the avenue.
 
-We assume that the water height at the control point is a increasing
+We assume that the water height  at the control point is an increasing
 function of the flow $q$ at that point.
 
-Let us considere three states related to the flow $q$:
+Let us consider three states related to the flow $q$:
 \begin{itemize}
 \item The \emph{steady state} corresponds to $q<\q{min}$, where $\q{min}$
 is the flow that brings the water at the control point high enough
@@ -38,7 +39,7 @@ For this the following control strategies are defined:
 \begin{itemize}
 \item If the maximum forecast flow $\q{i}$ is less than $\q{mao}$, the gates
 are not opened. 
-\item When $\q{i}>\q{mao}$ and $\q{f}<\q{max}$. In this case the goal is to minimize
+\item When $\q{i}>\q{mao}$ but is possible to level out the wave to a maximum   $\q{f}$, and this value is less than $\q{max}$. In this case the goal is to minimize
 the peak discharge after leveling. To compute this, one cuts from the hydrogram an area equivalent
 to the capacity of the floodable areas, to get a maxim plateau of
 $\q{f}$ flow. 
@@ -59,14 +60,14 @@ First we will discuss a simple control strategy:
 \end{quote}
 
 As a simple first approximation, we ignored the geometry of the river bed and assumed that the flood wave would maintain its shape as it propagated down the river.
-We will also assume the height of the river at a given point depends only on the discharge at this point by a increasing function.
-In this way we could use height and discharge interchangeably.
+We will also assume the height  of the river at a given point depends only on the discharge at this point by an increasing function.
+In this way we could use height  and discharge interchangeably.
 
 Given that opening a gate to a floodplain can reduce the flood by a given volume $W$, we look for the set point $\q{f}$ to
 open and close the gate in order to reduce the flood by this area optimally.
 
 Mathematically speaking, we define the discharge of a flood wave at the gate point as $q(t)$ and
-choose a refrence interval $[t_0,t_1]$ containing the flood episode.
+choose a reference interval $[t_0,t_1]$ containing the flood episode.
 For simplicity, assume as well that $q$ is unimodal and has a forecast maximum discharge $\q{i}$
 expected at time $t_m\in[t_0,t_1]$.
 Now define for all $0<y\leq\q{i}$:
@@ -134,7 +135,7 @@ while $W + \q f(\tp(\q f) - \tm(\q f)) = 57.44$.
 
 \section{Heavy Flooding} % (fold)
 
-However, when the flooding is particularly heavy, the capacity of the floodplains maybe insufficient. In this case, even when the peak of the flood is reduced by $W$, it is still higher than $\q{max}$ the levee height, causing floods. In this situation we have two options for controlling the gates, the first strategy is that the gates are opened as soon as the water level reaches $\q{max}$ and the resevoir is filled to capacity, hence reducing the front of the floodwave. This then gives us more time to deal with the flood, e.g. preparing to open more gates downstream (See figure \ref{fig:1}). 
+When the flooding is particularly heavy, the capacity of the floodplains may be insufficient. In this case, even when the peak of the flood is reduced by $W$, it is still higher than $\q{max}$ the levee height , causing floods. In this situation we have two options for controlling the gates, the first strategy is that the gates are opened as soon as the water level reaches $\q{max}$ and the resevoir is filled to capacity, hence reducing the front of the floodwave. This then gives us more time to deal with the flood, e.g. preparing to open more gates downstream (See figure \ref{fig:1}). 
 \begin{figure}
 \begin{center}
 \includegraphics[width=8cm]{fig1}		
@@ -168,36 +169,36 @@ figure \ref{fig:3} for a case where we can do even better.
 %\subsection*{Main problem: there are two possible strategies}
 %The objective of this section is to extract a numerical criteria based on the observations that have been carried out in the previous sections. Note that assuming that a heavy flooding is about to happen we may be able to define two possible strategies to follow.
 In this section we assume that a flood that can not be totally prevented is about to happen.
- Recall that a flooding  corresponds to scenario $\q{mao}<\q{f}$ and then, any possible gate opening strategy can avoid that the water level of Ebro surpasses at the analysed point the constructed walls and that floods the surrounding lands. When this happens, the controller of the gate opening must choose when to open the gate in order to reduce as much as it is possible the damage caused by the flooding. In this case, note that two main strategies can be raised: the gate can be either opened when the flow $q$ achieves $\q{mao}$ or it may be opened when $q_f$ is achieved.
+ Recall that a flooding  corresponds to scenario $\q{mao}<\q{f}$ and then, any possible gate opening strategy can avoid that the water level of the Ebro surpasses at the analysed point the constructed walls and that floods the surrounding lands. When this happens, the controller of the gate opening must choose when to open the gate in order to reduce as much as it is possible the damage caused by the flooding. In this case, note that two main strategies can be raised: the gate can be either opened when the flow $q$ achieves $\q{mao}$ or it may be opened when $q_f$ is achieved.
 
 The objective of this section is to extract a numerical criteria based on the observations that have been carried out in the previous sections that allows us to choose the best strategy in each possible situation.
 
-As we are going to analyse, each strategy has advantages and drawbacks: 
+As we are going to see, each strategy has advantages and drawbacks: 
 \begin{itemize}
-\item On the one hand, if the gate is opened at $\q{mao}$, the flood is going to be delayed as much as time as possible. However, once the flooding capacity is overpassed, we are not going to have any control of the amount of water that the river carries from this point on. Hence, when the flooding arrives to the most sensitive areas the biggest intensity of the  flood will not be mitigated.
+\item On the one hand, if the gate is opened at $\q{mao}$, the flood is going to be delayed for as long as possible. However, once the flooding capacity is surpassed, we are not going to have any control of the amount of water that the river carries from this point on. Hence, when the flooding arrives to the most sensitive areas the greatest intensity of the  flood will not be mitigated.
 %effects will be unknown.
 \begin{figure}\centering
 \includegraphics[width=8cm]{basicA}
 \caption{Flow diagram for strategy A}
 \label{fig:A}
 \end{figure} 
-Figure \ref{fig:A} shows schematically the inherent idea that defines strategy A. The water coloured in light blue is the amount of water that is able to be drained through the gates. The water coloured in red corresponds to the amount of water that is going to flood the area of interest where we analyse the scenario. Hence, in the presented strategy, once the water overpasses the acceptable level of the river, the door is opened. Then, while the flooding area is able to drain water, the flood is prevented. However, once we are not able to drain more water through the gates, all the remaining flooding water will continue its way, flooding freely the area of interest.
+Figure \ref{fig:A} shows schematically the inherent idea that defines strategy A. The water coloured in light blue is the amount of water that is able to be drained through the gates. The water coloured in red corresponds to the amount of water that is going to flood the area of interest where we analyse the scenario. Hence, in the presented strategy, once the water overpasses the acceptable level of the river, the door is opened. Then, while the flooding area is able to drain water, the flood is prevented. However, once we are not able to drain more water through the gates, all the remaining flooding water will continue on its way, flooding freely the area of interest.
 %areas that we wanted to protect as much as we could.
 
-\item On the other hand, the controller of the gate can wait to open it until $q$ achieves $q_f$. Then, the flooding of the sensitive areas starts earlier, whereas the most dangerous peak in the water amount that the flooding carries on is going to be cut out. This way, the main effects of the flooding will be reduced, because the intensity of the flow is going to be lower. However, we are going to let less time to the affected population to leave the affected areas.
+\item On the other hand, the controller of the gate can wait to open it until $q$ achieves $q_f$. Then, the flooding of the sensitive areas starts earlier, whereas the most dangerous peak in the water amount that the flooding carries on is going to be cut out. This way, the main effects of the flooding will be reduced, because the intensity of the flow is going to be lower. However, we are going to allow less time for the affected population to leave the affected areas.
 \begin{figure}\centering
 \includegraphics[width=8cm]{basicB}
 \caption{Flow diagram for strategy B}
 \label{fig:B}
 \end{figure}
-Figure \ref{fig:B} shows a water profile of the river channel where strategy B is applied. The colouring scheme is the same than the presented on figure \ref{fig:A}. Hence, figure \ref{fig:B} clearly presents the main drawback and the main advantage of this strategy in front of strategy~A. First, note that the red profile starts earlier than in the previous strategy, and hence, the flooding is not delayed as it happened before. However, the red profile does not get to the high values that strategy A achieved. Hence, strategy B avoids the flood in the peak where it has more intensity.
+Figure \ref{fig:B} shows a water profile of the river channel where strategy B is applied. The colouring scheme is the same than the presented on figure \ref{fig:A}. Hence, figure \ref{fig:B} clearly presents the main drawback and the main advantage of this strategy in front of strategy~A. First, note that the red profile starts earlier than in the previous strategy, and hence, the flooding is not delayed as it happened before. However, the red profile does not reach the high values that strategy A achieved. Hence, strategy B avoids the flood in the peak where it has more intensity.
 \end{itemize}
 
 \subsection{Damage cost function}
 Accounting for a correct selection of the strategy to follow in each possible scenario, we aim to define a cost 
- function in order to measure the human, economical,etc.\ cost of each strategy. The defined cost function takes on account two main factors:
+ function in order to measure the human, economical,etc.\ cost of each strategy. The defined cost function takes into account two main factors:
  \begin{itemize}
- \item the number of affected people depending on the heigh of the water in the flood, and 
+ \item the number of affected people depending on the height  of the water in the flood, and 
  \item the time that the strategy is able to delay the flood.
  \end{itemize}
   %The cost function that we are going to consider is defined as equation \ref{cost} shows. 
@@ -209,16 +210,16 @@ Assuming that the flooding starts at a given time $t_0$, the proposed cost funct
 C(t)=\int_{t_0}^{t}\frac{\rho(h(q(t)))}{t}dt,
 \label{cost}
 \end{equation}
-where $\rho$ is the density of population that lives below a certain heigh $h$. Note that the heigh of the flooding is a function of of $q$ (the height that the flooding affects to depends on $q$), and that both $q$ and $h$ are known in any possible scenario. We have divided the density by $t$ in order to ``decrease the cost'' when increasing the time, since we want to minimize the effects of the flood but we also want to penalise the time that a strategy  gives to the population to leave the affected zone. 
+where $\rho$ is the density of population that lives below a certain height $h$. Note that the height of the flooding is a function of of $q$ (the height  that the flooding reaches depends on $q$), and that both $q$ and $h$ are known in any possible scenario. We have divided the density by $t$ in order to ``decrease the cost'' when increasing the time, since we want to minimize the effects of the flood but we also want to penalise the time that a strategy  gives to the population to leave the affected zone. 
 
-Note that in this cost function definition, it can be decided if more importance is given to the amount of affected people, or to the delaying of the flooding. For instance, if we want to give more importance to the delay of the flood we can change the modelling cost and use some other $t^r$, $r>1$, penalising then an strategy that does not let time enough to the population to evacuate. Analogously, if we choose not to involve the delaying time in the cost penalization, we can also take $r=0$.
+Note that in this cost function definition, it can be decided if more importance is given to the amount of affected people, or to the delaying of the flooding. For instance, if we want to give more importance to the delay of the flood we can change the modelling cost and use some other $t^r$, $r>1$, penalising then a strategy that does not let time enough to the population to evacuate. Analogously, if we choose not to involve the delaying time in the cost penalization, we can also take $r=0$.
 
 \subsection{Finding the strategy that minimizes the cost function}
-Given an scenario, we do know all the variables that are involved in the definition of the cost function \eqref{cost}. Hence, in order to execute the better strategy, we only require to compute the integral \eqref{cost} and take the strategy with a lower cost.
+Given a scenario, we know all the variables that are involved in the definition of the cost function \eqref{cost}. Hence, in order to execute the better strategy, we are only required to compute the integral \eqref{cost} and take the strategy with a lower cost.
 %We want then to compute the cost function for each one of the two main strategies to follow in a flooding scenario. Hence, 
- The most valid strategy is the one that results in the minimum cost at the ending time of the flood, $t_1$.
+ The most valid strategy is the one that results in the minimum cost at the end time of the flood, $t_1$.
  
- However, it may be interesting to be able to know a priori bounds about the possible cost of each situation. Hence, we could have information before the flooding occurs about how each strategy behaves and, for example, we could be able to fix a default strategy that is known to be safer through the a priori bounds. Furthermore, if we ever are able to find lower and upper bounds for both strategies we may find interesting conclusions about the procedure to follow when a flood occurs.
+ However, it may be interesting to be able to know a priori bounds about the possible cost of each situation. Hence, we could have information before the flooding occurs about how each strategy behaves and, for example, we could be able to fix a default strategy that is known to be safer through the a priori bounds. Furthermore, if we are able to find lower and upper bounds for both strategies we may find interesting conclusions about the procedure to follow when a flood occurs.
 
 \begin{description}
 \item[Strategy A:] Opening the gates when $\q{mao}$ is achieved.
